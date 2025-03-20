@@ -1,0 +1,17 @@
+# EECS 4413 Project Frontend
+
+## Executing
+
+Windows:
+```
+.venv\Scripts\activate
+python -m flask --app hello run
+```
+
+Unix:
+```
+. .venv/bin/activate
+python -m flask --app hello run
+```
+
+The site will be at http://localhost:5000
