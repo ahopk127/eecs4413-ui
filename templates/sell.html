@@ -1,0 +1,24 @@
+<html>
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sell Item</title>
+    </head>
+    <body>
+        <h1>Sell Item</h1>
+        <form>
+            <label for="item-name">Item Name: </label>
+            <input type="text" id="item-name" required><br>
+            <label for="initial-price">Initial Price: $</label>
+            <input type="number" id="initial-price" required><br>
+            Auction Type:<br>
+            <input type="radio" id="normal" value="normal">
+            <label for="normal"><abbr title="Everyone has a certain time to bid for the item.  Whoever offers the highest price buys the item for that price.">Normal</abbr></label><br>
+            <input type="radio" id="dutch" value="dutch">
+            <label for="dutch"><abbr title="The item is offered at a certain price, which decreases over time.  Whoever makes an offer first buys the item for that price.">Dutch</abbr></label><br>
+            <label for="until">Run auction until:</label>
+            <input id="until" type="date"><br><br>
+            <input type="button" value="Start Auction">
+        </form>
+    </body>
+</html>
