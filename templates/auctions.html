@@ -41,6 +41,10 @@
          caption {
              padding: 10px;
          }
+
+         .hidden {
+             display: none;
+         }
         </style>
     </head>
     <body>
@@ -60,6 +64,7 @@
             <tbody id="itemsTableBody">
             </tbody>
         </table>
+        <p id="loginnotice" class="hidden">Please log in to participate in auctions.</p>
         <input type="button" value="Bid on Selected Auction" id="bid">
         <input type="button" value="Set Price of Selected Auction" id="set-price">
         <script>
@@ -88,6 +93,12 @@
                console.log(error);
              }
            });
+
+           if (!localStorage.getItem("activeUserId")) {
+             document.getElementById("bid").disabled = true;
+             document.getElementById("set-price").disabled = true;
+             document.getElementById("loginnotice").classList.remove("hidden");
+           }
          });
 
          $("#search").on("input", function() {

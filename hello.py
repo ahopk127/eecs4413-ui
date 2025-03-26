@@ -15,6 +15,10 @@ def register():
 def login():
     return render_template('login.html')
 
+@app.route("/resetpass")
+def reset_password():
+    return render_template('resetPassword.html')
+
 @app.route("/")
 @app.route("/home")
 def home():

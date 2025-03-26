@@ -18,7 +18,7 @@
         <a href="/register" id="sign-up">Sign Up</a>
         <input type="button" value="Logout" id="logout"><br>
         <a href="/auctions">Auctions</a>
-        <a href="/auctions/sell">New Auction</a>
+        <a href="/auctions/sell" id="new-auction">New Auction</a>
     </body>
     <script>
      function setLoggedIn(userId) {
@@ -44,6 +44,7 @@
      } else {
        document.getElementById("loggedin").classList.add("hidden");
        document.getElementById("logout").classList.add("hidden");
+       document.getElementById("new-auction").classList.add("hidden");
      }
 
      document.getElementById("logout").addEventListener("click", (e) => {
