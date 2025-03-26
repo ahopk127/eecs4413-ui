@@ -3,15 +3,43 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
         <h1>Login</h1>
-        <form>
+        <form id="loginForm">
             <label for="username-input">Username:</label>
             <input type="text" id="username-input"><br>
             <label for="password-input">Password:</label>
             <input type="password" id="password-input"><br>
             <input type="submit" action="login" value="Login">
         </form>
+        <script>
+         $("#loginForm").submit(function(e) {
+           e.preventDefault();
+           var accountData = {
+             username: $("#username-input").val(),
+             password: $("#password-input").val(),
+           };
+           $.ajax({
+             url: "http://localhost:8085/api/users/login",
+             type: 'POST',
+             contentType: 'application/json',
+             data: JSON.stringify(accountData),
+             success: function(result) {
+               localStorage.setItem("activeUsername", result.username);
+               window.location.href = "/home";
+             },
+	     error: function(error) {
+               if (error.status === 401) {
+                 alert("Login failed.");
+               } else {
+                 console.log("An error occurred.");
+                 console.log(error);
+               }
+             }
+           });
+         });
+        </script>
     </body>
 </html>
