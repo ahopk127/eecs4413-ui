@@ -23,3 +23,11 @@ def home():
 @app.route("/auctions")
 def auctions():
     return render_template('auctions.html')
+
+@app.route("/auctions/forward/<auctionId>")
+def forward(auctionId: int):
+    return render_template('bid_forward.html', auctionId=auctionId)
+
+@app.route("/auctions/dutch/<auctionId>")
+def dutch(auctionId: int):
+    return render_template('bid_dutch.html', auctionId=auctionId)

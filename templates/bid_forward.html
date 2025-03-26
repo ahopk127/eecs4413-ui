@@ -2,15 +2,17 @@
     <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dutch Auction</title>
+	<title>Forward Auction</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
-        <h1>Dutch Auction &ndash; <span id="name"></span></h1>
+        <h1>Forward Auction &ndash; <span id="name"></span></h1>
         <p id="description">Description</p>
         <p>Current Price: $<span id="price"></span></p>
         <p>Highest Bidder: <span id="bidder">No one has bidded on this auction yet.</span></p>
-        <input type="button" value="Bid Now">
+        <label for="bid">Amount to bid: $</label>
+        <input type="text" id="bid"><br>
+        <input type="button" value="Bid">
         <script>
          $(document).ready(function() {
            $.ajax({
