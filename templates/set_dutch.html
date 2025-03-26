@@ -2,15 +2,78 @@
     <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dutch Auction</title>
+	<title>Dutch Auction &ndash; Set Price</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <style>
+         .hidden {
+             display: none;
+         }
+        </style>
     </head>
     <body>
-        <h1>Dutch Auction - Set Price</h1>
-        <p>Name: <span id="name"></span></p>
+        <h1>Dutch Auction &ndash; <span id="name"></span> &ndash; Set Price</h1>
         <p id="description">Description</p>
-        <p>Current Price: <span id="price"></span></p>
-        <label for="new-price">New Price: $</label>
-        <input type="number" id="new-price"><br>
-        <input type="button" value="Set Price">
+        <p>Current Price: $<span id="price"></span></p>
+        <p id="sold" class="hidden">This item has been sold.</p>
+        <p id="noaccess" class="hidden">Only the owner can set the price.</p>
+        <form id="set-price-form">
+            <label for="new-price">New Price: $</label>
+            <input type="number" id="new-price"><br>
+            <input type="submit" value="Set Price" id="set-price">
+        </form>
+        <script>
+         var cachedItem;
+
+         $(document).ready(function() {
+           $.ajax({
+             url: "http://localhost:8085/api/items/{{ auctionId }}",
+             type: 'GET',
+             success: function(result) {
+               cachedItem = result;
+               $("#name").text(result.name);
+               $("#description").text(result.description);
+               $("#price").text(result.currentPrice.toFixed(2));
+               if (result.status === "SOLD") {
+                 $("#sold").removeClass("hidden");
+                 $("#new-price").attr("disabled", true);
+                 $("#set-price").attr("disabled", true);
+               }
+
+               console.log(result.owner.id);
+               if (localStorage.getItem("activeUserId") != result.owner.id) {
+                 $("#noaccess").removeClass("hidden");
+                 $("#new-price").attr("disabled", true);
+                 $("#set-price").attr("disabled", true);
+               }
+             },
+             error: function(error){
+               console.log(error);
+             }
+           });
+         });
+
+         $("#set-price-form").submit(function(e) {
+	   e.preventDefault();
+           var item = structuredClone(cachedItem);
+           item.currentPrice = parseFloat($("#new-price").val());
+           console.log(JSON.stringify(item));
+           $.ajax({
+             url: "http://localhost:8085/api/items/{{ auctionId }}",
+             type: 'PUT',
+             contentType: 'application/json',
+             data: JSON.stringify(item),
+             beforeSend: function(jqXHR, settings) {
+               if (item.currentPrice >= cachedItem.currentPrice) {
+                 alert("The new price must be less than the orginal price.");
+                 return false;
+               }
+
+               return true;
+             },
+             success: function(result) { location.reload(); },
+             error: function(error) { console.log(error); }
+           });
+         });
+        </script>
     </body>
 </html>

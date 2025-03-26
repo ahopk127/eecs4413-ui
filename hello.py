@@ -44,3 +44,7 @@ def pay(auctionId: int):
 @app.route("/auctions/receipt/<auctionId>/")
 def receipt(auctionId: int):
     return render_template('receiving.html', auctionId=auctionId)
+
+@app.route("/auctions/setprice/<auctionId>/")
+def set_price(auctionId: int):
+    return render_template('set_dutch.html', auctionId=auctionId)

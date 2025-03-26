@@ -61,6 +61,7 @@
             </tbody>
         </table>
         <input type="button" value="Bid on Selected Auction" id="bid">
+        <input type="button" value="Set Price of Selected Auction" id="set-price">
         <script>
          var cachedResult;
 
@@ -114,6 +115,22 @@
              window.location.href = `/auctions/${item.auctionType.toLowerCase()}/${selectedId}`;
            } else {
              window.location.href = `/auctions/done/${selectedId}`;
+           }
+         });
+
+         $("#set-price").on("click", function() {
+           const selectedId = $('input[name="auction-select"]:checked').val();
+           const items = cachedResult.filter((item) => item.id == selectedId);
+           const item = items[0];
+
+           const completion = new Date(item.duration);
+           const now = new Date();
+
+           console.log(item);
+           if (now >= completion || localStorage.getItem("activeUserId") != item.owner.id || item.auctionType !== "DUTCH" || item.status !== "AVAILABLE") {
+             alert("You can't set this item's price.");
+           } else {
+             window.location.href = `/auctions/${item.auctionType.toLowerCase()}/${selectedId}`;
            }
          });
         </script>
