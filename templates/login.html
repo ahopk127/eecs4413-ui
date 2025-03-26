@@ -27,7 +27,7 @@
              contentType: 'application/json',
              data: JSON.stringify(accountData),
              success: function(result) {
-               localStorage.setItem("activeUsername", result.username);
+               localStorage.setItem("activeUserId", result.id);
                window.location.href = "/home";
              },
 	     error: function(error) {
