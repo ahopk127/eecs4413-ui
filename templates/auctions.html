@@ -3,19 +3,84 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Auctions</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <style>
+         html {
+             font-family: sans-serif;
+         }
+
+         table {
+             border-collapse: collapse;
+             border: 2px solid rgb(200,200,200);
+             letter-spacing: 1px;
+             font-size: 0.8rem;
+         }
+
+         td, th {
+             border: 1px solid rgb(190,190,190);
+             padding: 10px 20px;
+         }
+
+         th {
+             background-color: rgb(235,235,235);
+         }
+
+         td {
+             text-align: center;
+         }
+
+         tr:nth-child(even) td {
+             background-color: rgb(250,250,250);
+         }
+
+         tr:nth-child(odd) td {
+             background-color: rgb(245,245,245);
+         }
+
+         caption {
+             padding: 10px;
+         }
+        </style>
     </head>
     <body>
         <h1>Auctions</h1>
-        <input type="text" id="search">
-        <table>
-            <th>
-                <tr>Item Name</tr>
-                <tr>Current Price ($)</tr>
-                <tr>Auction Type</tr>
-                <tr>Remaining Time</tr>
-                <tr>Select</tr>
-            </th>
+        <input type="text" id="search"><br>
+        <table id="itemsTable">
+            <thead>
+                <tr>
+                    <td>Item Name</td>
+                    <td>Current Price ($)</td>
+                    <td>Auction Type</td>
+                    <td>Auction Ends</td>
+                    <td>Select</td>
+                </tr>
+            </thead>
+            <tbody id="itemsTableBody">
+            </tbody>
         </table>
         <input type="button" value="Submit">
+        <script>
+         $(document).ready(function(){
+           $.ajax({
+             url: "http://localhost:8085/api/items",
+             type: 'GET',
+             success: function(result){
+               var table = $("#itemsTableBody");
+               result.forEach(function(item) {
+                 var row = $("<tr></tr>");
+                 row.append($("<td></td>").text(item.name));
+                 row.append($("<td></td>").text(item.currentPrice));
+                 row.append($("<td></td>").text(item.auctionType));
+                 row.append($("<td></td>").text(item.duration));
+                 row.append(`<td><input type=\"radio\" value=${item.id}></td>`);
+                 table.append(row);
+               });
+             },
+             error: function(error){
+               console.log(error);
+             }
+           });
+         });
+        </script>
     </body>
 </html>

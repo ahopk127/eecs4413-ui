@@ -19,3 +19,7 @@ def login():
 @app.route("/home")
 def home():
     return render_template('home.html')
+
+@app.route("/auctions")
+def auctions():
+    return render_template('auctions.html')
