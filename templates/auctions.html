@@ -14,6 +14,7 @@
              border: 2px solid rgb(200,200,200);
              letter-spacing: 1px;
              font-size: 0.8rem;
+             margin: 10px 0px;
          }
 
          td, th {
@@ -59,7 +60,7 @@
             <tbody id="itemsTableBody">
             </tbody>
         </table>
-        <input type="button" value="Submit">
+        <input type="button" value="Bid on Selected Auction" id="bid">
         <script>
          var cachedResult;
 
@@ -69,7 +70,7 @@
            row.append($("<td></td>").text(item.currentPrice));
            row.append($("<td></td>").text(item.auctionType));
            row.append($("<td></td>").text(item.duration));
-           row.append(`<td><input type=\"radio\" value=${item.id}></td>`);
+           row.append(`<td><input name=\"auction-select\" type=\"radio\" value=${item.id}></td>`);
            table.append(row);
          }
 
@@ -99,6 +100,14 @@
                addItem(table, item);
              }
            });
+         });
+
+         $("#bid").on("click", function() {
+           const selectedId = $('input[name="auction-select"]:checked').val();
+           const items = cachedResult.filter((item) => item.id == selectedId);
+           const item = items[0];
+
+           window.location.href = `/auctions/${item.auctionType.toLowerCase()}/${selectedId}`;
          });
         </script>
     </body>
