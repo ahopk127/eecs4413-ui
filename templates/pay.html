@@ -3,6 +3,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pay for Item</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
         <h1>Pay for Item</h1>
@@ -10,20 +11,109 @@
         <p>First Name: <span id="first-name"></span></p>
         <p>Last Name: <span id="last-name"></span></p>
         <p>Street: <span id="street"></span></p>
-        <p>Number: <span id="number"></span></p>
-        <p>Province: <span id="province"></span></p>
+        <p>Street Number: <span id="street-number"></span></p>
+        <p>City: <span id="city"></span></p>
         <p>Country: <span id="country"></span></p>
         <p>Postal Code: <span id="postal-code"></span></p>
-        <p>Total Cost: <span id="price"></span></p>
+
+        <h2>Auctioned Item &ndash; <span id="name">Item</span></h2>
+        <p id="description">Description</p>
+        <p>Expedited Shipping: {{ "Yes" if expedited.lower() == "True" else "No" }}</p>
+        <p>Total Cost: $<span id="total"></span></p>
 
         <h2>Credit Card</h2>
-        <form>
-            <label for="username-input">Username:</label>
-            <input type="text" id="username-input"><br>
-            <label for="password-input">Password:</label>
-            <input type="text" id="password-input"><br>
-            <input type="submit" action="login" value="Login">
-            <input type="submit" action="register" value="Register">
+        <form id="payForm">
+            <label for="card-num-input">Card #:</label>
+            <input type="text" id="card-num-input"><br>
+            <label for="card-name-input">Name on Card:</label>
+            <input type="text" id="card-name-input"><br>
+            <label for="exp-date-input">Expiration Date:</label>
+            <input type="text" id="exp-date-input"><br>
+            <label for="security-code-input">Security Code:</label>
+            <input type="text" id="security-code-input"><br>
+            <input type="submit" value="Pay for Item">
         </form>
+        <script>
+         function updateBidderData(bidder) {
+           $("#first-name").text(bidder.firstName);
+           $("#last-name").text(bidder.lastName);
+           $("#street").text(bidder.streetName);
+           $("#street-number").text(bidder.streetNumber);
+           $("#city").text(bidder.city);
+           $("#country").text(bidder.country);
+           $("#postal-code").text(bidder.postalCode);
+         }
+
+         function updatePrice() {
+           $.ajax({
+             url: "http://localhost:8085/api/items/{{ auctionId }}",
+             type: 'GET',
+             success: function(result) {
+               cachedItem = result;
+               const currentPrice = result.currentPrice || 0.0;
+               const shippingPrice = result.shippingPrice || 0.0;
+               const expeditedShippingPrice = result.expeditedShippingPrice || 0.0;
+
+               if ({{ expedited }}) {
+                 $("#total").text((currentPrice + shippingPrice + expeditedShippingPrice).toFixed(2));
+               } else {
+                 $("#total").text((currentPrice + shippingPrice).toFixed(2));
+               }
+               if (result.highestBidder) {
+                 $("#bidder").text(result.highestBidder.username);
+               }
+             },
+             error: function(error){
+               console.log(error);
+             }
+           });
+         }
+
+         $(document).ready(function() {
+           $.ajax({
+             url: "http://localhost:8085/api/items/{{ auctionId }}",
+             type: 'GET',
+             success: function(result) {
+               cachedItem = result;
+
+               $("#name").text(result.name);
+               $("#description").text(result.description);
+               if (result.highestBidder) {
+                 $("#bidder").text(result.highestBidder.username);
+               }
+
+               updatePrice();
+               updateBidderData(result.highestBidder);
+             },
+             error: function(error){
+               console.log(error);
+             }
+           });
+         });
+
+         $("#payForm").submit(function(e) {
+           e.preventDefault();
+           var paymentData = {
+             itemId: {{ auctionId }},
+             customerId: localStorage.getItem("activeUserId"),
+             cardNumber: $("#card-num-input").val(),
+             cardName: $("#card-name-input").val(),
+             expirationDate: $("#exp-date-input").val(),
+             securityCode: $("#security-code-input").val(),
+             shipping: {{ expedited }}
+           };
+           console.log(JSON.stringify(paymentData));
+           $.ajax({
+             url: "http://localhost:8085/api/main/pay_now",
+             type: 'POST',
+             contentType: 'application/json',
+             data: JSON.stringify(paymentData),
+             success: function(result) {
+               window.location.href = `/auctions/receipt/{{ auctionId }}`;
+             },
+	     error: function(error) { console.log(error); }
+           });
+         });
+        </script>
     </body>
 </html>

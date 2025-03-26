@@ -14,7 +14,7 @@
         <label for="expedited-shipping">Enable Expedited Shipping</label>
         <p>Expedited Shipping Price: +$<span id="expedited-price"></span></p>
         <p>Total: $<span id="total"></span></p>
-        <input type="button" value="Pay Now">
+        <input type="button" value="Pay Now" id="pay">
         <script>
          var cachedItem;
 
@@ -68,6 +68,11 @@
          });
 
          $("#expedited-shipping").on("change", updatePrice);
+
+         $("#pay").on("click", function() {
+           const expedited = document.getElementById("expedited-shipping").checked;
+           window.location.href = `/auctions/pay/{{ auctionId }}/?expedited=${expedited}`;
+         });
 
         </script>
     </body>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -35,3 +35,8 @@ def dutch(auctionId: int):
 @app.route("/auctions/done/<auctionId>")
 def auction_done(auctionId: int):
     return render_template('auction_ended.html', auctionId=auctionId)
+
+@app.route("/auctions/pay/<auctionId>/")
+def pay(auctionId: int):
+    expedited = request.args.get('expedited')
+    return render_template('pay.html', auctionId=auctionId, expedited=expedited)
