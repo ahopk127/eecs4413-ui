@@ -44,6 +44,7 @@
     </head>
     <body>
         <h1>Auctions</h1>
+        <label for="search">Search Auctions:</label>
         <input type="text" id="search"><br>
         <table id="itemsTable">
             <thead>
@@ -60,24 +61,42 @@
         </table>
         <input type="button" value="Submit">
         <script>
-         $(document).ready(function(){
+         var cachedResult;
+
+         function addItem(table, item) {
+           var row = $("<tr></tr>");
+           row.append($("<td></td>").text(item.name));
+           row.append($("<td></td>").text(item.currentPrice));
+           row.append($("<td></td>").text(item.auctionType));
+           row.append($("<td></td>").text(item.duration));
+           row.append(`<td><input type=\"radio\" value=${item.id}></td>`);
+           table.append(row);
+         }
+
+         $(document).ready(function() {
            $.ajax({
              url: "http://localhost:8085/api/items",
              type: 'GET',
-             success: function(result){
+             success: function(result) {
                var table = $("#itemsTableBody");
-               result.forEach(function(item) {
-                 var row = $("<tr></tr>");
-                 row.append($("<td></td>").text(item.name));
-                 row.append($("<td></td>").text(item.currentPrice));
-                 row.append($("<td></td>").text(item.auctionType));
-                 row.append($("<td></td>").text(item.duration));
-                 row.append(`<td><input type=\"radio\" value=${item.id}></td>`);
-                 table.append(row);
-               });
+               result.forEach(function(item) { addItem(table, item) });
+               cachedResult = result;
              },
              error: function(error){
                console.log(error);
+             }
+           });
+         });
+
+         $("#search").on("input", function() {
+           const searchTerm = $("#search").val().toLowerCase();
+
+           $("#itemsTableBody tr").remove();
+
+           var table = $("#itemsTableBody");
+           cachedResult.forEach(function(item) {
+             if (item.name.toLowerCase().includes(searchTerm)) {
+               addItem(table, item);
              }
            });
          });
