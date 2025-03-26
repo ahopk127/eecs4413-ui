@@ -3,15 +3,72 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Auction Ended</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
-        <h1>Auction Ended</h1>
-        <p>Description</p>
-        <p>Price: <span id="price"></span></p>
+        <h1>Auction Ended &ndash; <span id="name"></span></h1>
+        <p id="description">Description</p>
+        <p>Price: $<span id="price"></span></p>
+        <p>Shipping Price: $<span id="shipping"></span></p>
         <input type="checkbox" id="expedited-shipping">
         <label for="expedited-shipping">Enable Expedited Shipping</label>
-        <p>Shipping Price: <span id="shipping"></span></p>
-        <p>Expedited Shipping Price: <span id="shipping"></span></p>
+        <p>Expedited Shipping Price: +$<span id="expedited-price"></span></p>
+        <p>Total: $<span id="total"></span></p>
         <input type="button" value="Pay Now">
+        <script>
+         var cachedItem;
+
+         function updatePrice() {
+           $.ajax({
+             url: "http://localhost:8085/api/items/{{ auctionId }}",
+             type: 'GET',
+             success: function(result) {
+               cachedItem = result;
+               const currentPrice = result.currentPrice || 0.0;
+               const shippingPrice = result.shippingPrice || 0.0;
+               const expeditedShippingPrice = result.expeditedShippingPrice || 0.0;
+
+               $("#price").text(currentPrice.toFixed(2));
+               $("#shipping").text(shippingPrice.toFixed(2));
+               $("#expedited-price").text(expeditedShippingPrice.toFixed(2));
+               if (document.getElementById("expedited-shipping").checked) {
+                 $("#total").text((currentPrice + shippingPrice + expeditedShippingPrice).toFixed(2));
+               } else {
+                 $("#total").text((currentPrice + shippingPrice).toFixed(2));
+               }
+               if (result.highestBidder) {
+                 $("#bidder").text(result.highestBidder.username);
+               }
+             },
+             error: function(error){
+               console.log(error);
+             }
+           });
+         }
+
+         $(document).ready(function() {
+           $.ajax({
+             url: "http://localhost:8085/api/items/{{ auctionId }}",
+             type: 'GET',
+             success: function(result) {
+               cachedItem = result;
+
+               $("#name").text(result.name);
+               $("#description").text(result.description);
+               if (result.highestBidder) {
+                 $("#bidder").text(result.highestBidder.username);
+               }
+
+               updatePrice();
+             },
+             error: function(error){
+               console.log(error);
+             }
+           });
+         });
+
+         $("#expedited-shipping").on("change", updatePrice);
+
+        </script>
     </body>
 </html>

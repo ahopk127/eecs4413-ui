@@ -10,6 +10,7 @@
         <p id="description">Description</p>
         <p>Current Price: $<span id="price"></span></p>
         <p>Highest Bidder: <span id="bidder">No one has bidded on this auction yet.</span></p>
+        <p>Auction Runs until: <span id="end-time"></span></p>
         <form id="bid-form">
             <label for="bid-amount">Amount to bid: $</label>
             <input type="number" id="bid-amount"><br>
@@ -27,6 +28,7 @@
                $("#name").text(result.name);
                $("#description").text(result.description);
                $("#price").text(result.currentPrice.toFixed(2));
+               $("#end-time").text(result.duration);
                if (result.highestBidder) {
                  $("#bidder").text(result.highestBidder.username);
                }

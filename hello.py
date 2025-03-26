@@ -31,3 +31,7 @@ def forward(auctionId: int):
 @app.route("/auctions/dutch/<auctionId>")
 def dutch(auctionId: int):
     return render_template('bid_dutch.html', auctionId=auctionId)
+
+@app.route("/auctions/done/<auctionId>")
+def auction_done(auctionId: int):
+    return render_template('auction_ended.html', auctionId=auctionId)

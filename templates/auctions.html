@@ -107,7 +107,14 @@
            const items = cachedResult.filter((item) => item.id == selectedId);
            const item = items[0];
 
-           window.location.href = `/auctions/${item.auctionType.toLowerCase()}/${selectedId}`;
+           const completion = new Date(item.duration);
+           const now = new Date();
+
+           if (now < completion) {
+             window.location.href = `/auctions/${item.auctionType.toLowerCase()}/${selectedId}`;
+           } else {
+             window.location.href = `/auctions/done/${selectedId}`;
+           }
          });
         </script>
     </body>
