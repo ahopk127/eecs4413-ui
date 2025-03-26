@@ -56,3 +56,7 @@ def receipt(auctionId: int):
 @app.route("/auctions/setprice/<auctionId>/")
 def set_price(auctionId: int):
     return render_template('set_dutch.html', auctionId=auctionId)
+
+@app.route("/styles.css")
+def styles():
+    return render_template('styles.css')

@@ -4,11 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Dutch Auction</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <style>
-         .hidden {
-             display: none;
-         }
-        </style>
+        <link rel="stylesheet" href="/styles.css">
     </head>
     <body>
         <h1>Dutch Auction &ndash; <span id="name"></span></h1>
@@ -52,7 +48,7 @@
              type: 'POST',
              contentType: 'application/json',
              data: JSON.stringify(bidData),
-             success: function(result) { location.reload(); },
+             success: function(result) { location.href="/auctions/done/{{ auctionId }}"; },
              error: function(error) { console.log(error); }
            });
          });
