@@ -109,7 +109,7 @@
              contentType: 'application/json',
              data: JSON.stringify(paymentData),
              success: function(result) {
-               window.location.href = `/auctions/receipt/{{ auctionId }}`;
+               window.location.href = `/auctions/receipt/{{ auctionId }}/`;
              },
 	     error: function(error) { console.log(error); }
            });

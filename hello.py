@@ -40,3 +40,7 @@ def auction_done(auctionId: int):
 def pay(auctionId: int):
     expedited = request.args.get('expedited')
     return render_template('pay.html', auctionId=auctionId, expedited=expedited)
+
+@app.route("/auctions/receipt/<auctionId>/")
+def receipt(auctionId: int):
+    return render_template('receiving.html', auctionId=auctionId)
