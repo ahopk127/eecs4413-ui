@@ -4,29 +4,56 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Dutch Auction</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <style>
+         .hidden {
+             display: none;
+         }
+        </style>
     </head>
     <body>
         <h1>Dutch Auction &ndash; <span id="name"></span></h1>
         <p id="description">Description</p>
         <p>Current Price: $<span id="price"></span></p>
-        <p>Highest Bidder: <span id="bidder">No one has bidded on this auction yet.</span></p>
-        <input type="button" value="Bid Now">
+        <p id="sold" class="hidden">This item has been sold.</p>
+        <input type="button" value="Buy Now" id="bid-btn">
         <script>
+         var cachedItem;
+
          $(document).ready(function() {
            $.ajax({
              url: "http://localhost:8085/api/items/{{ auctionId }}",
              type: 'GET',
              success: function(result) {
+               cachedItem = result;
                $("#name").text(result.name);
                $("#description").text(result.description);
                $("#price").text(result.currentPrice.toFixed(2));
-               if (result.highestBidder) {
-                 $("#bidder").text(result.highestBidder);
+               if (result.status === "SOLD") {
+                 $("#sold").removeClass("hidden");
+                 $("#bid-btn").attr("disabled", true);
                }
              },
              error: function(error){
                console.log(error);
              }
+           });
+         });
+
+         $("#bid-btn").on("click", function(e) {
+	   e.preventDefault();
+           const bidData = {
+             itemId: cachedItem.id,
+             userId: localStorage.getItem("activeUserId"),
+             bidAmount: cachedItem.currentPrice
+           };
+           console.log(JSON.stringify(bidData));
+           $.ajax({
+             url: "http://localhost:8085/api/main/bid",
+             type: 'POST',
+             contentType: 'application/json',
+             data: JSON.stringify(bidData),
+             success: function(result) { location.reload(); },
+             error: function(error) { console.log(error); }
            });
          });
         </script>
