@@ -1,0 +1,35 @@
+<html>
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Auction System &ndash; Team Silicon</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <style>
+         .hidden {
+             display: none;
+         }
+        </style>
+    </head>
+    <body>
+        <h1>Auction System &ndash; Team Silicon</h1>
+        <p>You are logged in as [<span id="username"></span>].</p>
+        <a href="/login" id="login">Login</a>
+        <a href="/register" id="sign-up">Sign Up</a>
+        <input type="button" value="Logout" id="logout">
+    </body>
+    <script>
+     const username = localStorage.getItem("activeUsername");
+     if (username) {
+       document.getElementById("username").innerText = username;
+       document.getElementById("login").classList.add("hidden");
+       document.getElementById("sign-up").classList.add("hidden");
+     } else {
+       document.getElementById("logout").classList.add("hidden");
+     }
+
+     document.getElementById("logout").addEventListener("click", (e) => {
+       localStorage.removeItem("activeUsername");
+       location.reload();
+     });
+    </script>
+</html>
