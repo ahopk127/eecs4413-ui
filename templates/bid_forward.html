@@ -10,26 +10,69 @@
         <p id="description">Description</p>
         <p>Current Price: $<span id="price"></span></p>
         <p>Highest Bidder: <span id="bidder">No one has bidded on this auction yet.</span></p>
-        <label for="bid">Amount to bid: $</label>
-        <input type="text" id="bid"><br>
-        <input type="button" value="Bid">
+        <form id="bid-form">
+            <label for="bid-amount">Amount to bid: $</label>
+            <input type="number" id="bid-amount"><br>
+            <input type="submit" value="Bid" id="bid">
+        </form>
         <script>
+         var cachedItem;
+
          $(document).ready(function() {
            $.ajax({
              url: "http://localhost:8085/api/items/{{ auctionId }}",
              type: 'GET',
              success: function(result) {
+               cachedItem = result;
                $("#name").text(result.name);
                $("#description").text(result.description);
                $("#price").text(result.currentPrice.toFixed(2));
                if (result.highestBidder) {
-                 $("#bidder").text(result.highestBidder);
+                 $("#bidder").text(result.highestBidder.username);
                }
              },
              error: function(error){
                console.log(error);
              }
            });
+         });
+
+         function updateBid(item, amount) {
+           const bidData = {
+             itemId: item.id,
+             userId: localStorage.getItem("activeUserId"),
+             bidAmount: amount
+           };
+           console.log(JSON.stringify(bidData));
+           $.ajax({
+             url: "http://localhost:8085/api/main/bid",
+             type: 'POST',
+             contentType: 'application/json',
+             data: JSON.stringify(bidData),
+             success: function(result) { location.reload(); },
+             error: function(error) { console.log(error); }
+           });
+         }
+
+         $("#bid-form").submit(function(e) {
+	   e.preventDefault();
+
+           const bidAmountStr = $("#bid-amount").val();
+           if (isNaN(bidAmountStr) || isNaN(parseFloat(bidAmountStr))) {
+             alert("Please enter an amount to bid.");
+             return;
+           };
+
+           const bidAmount = parseFloat(bidAmountStr);
+           if (bidAmount <= cachedItem.currentPrice) {
+             alert("Please enter a price higher than the current price.");
+             return;
+           } else if (bidAmount <= cachedItem.startingPrice) {
+             alert("Please enter a price higher than the starting price.");
+             return;
+           }
+
+           updateBid(cachedItem, bidAmount);
          });
         </script>
     </body>
