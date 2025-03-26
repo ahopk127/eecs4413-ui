@@ -24,6 +24,10 @@ def home():
 def auctions():
     return render_template('auctions.html')
 
+@app.route("/auctions/sell")
+def sell():
+    return render_template('sell.html')
+
 @app.route("/auctions/forward/<auctionId>")
 def forward(auctionId: int):
     return render_template('bid_forward.html', auctionId=auctionId)
