@@ -10,7 +10,7 @@
         <nav>
             Silicon Auctions
 
-            <div class="navbuttons">
+            <div class="alignright">
                 <span id="username" class="navitem">Not logged in</span>
                 <a href="/home" id="logout" class="navbutton">Logout</a>
                 <a href="/login" id="login" class="navbutton">Login</a>
@@ -24,13 +24,15 @@
         <script src="/navcode.js"></script>
         <h1>Receiving Item</h1>
         <h2>Winning Bidder</h2>
-        <p>First Name: <span id="first-name"></span></p>
-        <p>Last Name: <span id="last-name"></span></p>
-        <p>Street: <span id="street"></span></p>
-        <p>Street Number: <span id="street-number"></span></p>
-        <p>City: <span id="city"></span></p>
-        <p>Country: <span id="country"></span></p>
-        <p>Postal Code: <span id="postal-code"></span></p>
+        <table class="fancytable">
+            <tr><td>First Name</td><td id="first-name"></td></tr>
+            <tr><td>Last Name</td><td id="last-name"></td></tr>
+            <tr><td>Street</td><td id="street"></td></tr>
+            <tr><td>Street Number</td><td id="street-number"></td></tr>
+            <tr><td>City</td><td id="city"></td></tr>
+            <tr><td>Country</td><td id="country"></td></tr>
+            <tr><td>Postal Code</td><td id="postal-code"></td></tr>
+        </table>
 
         <h2>Auctioned Item &ndash; <span id="name">Item</span></h2>
         <p id="description">Description</p>

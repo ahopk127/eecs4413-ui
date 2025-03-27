@@ -10,7 +10,7 @@
         <nav>
             Silicon Auctions
 
-            <div class="navbuttons">
+            <div class="alignright">
                 <span id="username" class="navitem">Not logged in</span>
                 <a id="logout" class="navbutton">Logout</a>
                 <a href="/login" id="login" class="navbutton">Login</a>
@@ -24,12 +24,18 @@
         <script src="/navcode.js"></script>
         <h1>Login</h1>
         <form id="loginForm">
-            <label for="username-input">Username:</label>
-            <input type="text" id="username-input"><br>
-            <label for="password-input">Password:</label>
-            <input type="password" id="password-input"><br>
-            <a href="/resetpass">Forgot password?</a><br>
-            <input type="submit" action="login" value="Login">
+            <table>
+                <tr>
+                    <td><label for="username-input">Username</label></td>
+                    <td><input type="text" id="username-input"></td>
+                </tr>
+                <tr>
+                    <td><label for="password-input">Password</label></td>
+                    <td><input type="password" id="password-input"><br></td>
+                </tr>
+            </table>
+            <input type="submit" action="login" value="Login" class="mainbutton">
+            <p><a href="/resetpass"><em>Forgot password?</em></a></p>
         </form>
         <script>
          $("#loginForm").submit(function(e) {

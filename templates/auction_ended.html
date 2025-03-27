@@ -10,7 +10,7 @@
         <nav>
             Silicon Auctions
 
-            <div class="navbuttons">
+            <div class="alignright">
                 <span id="username" class="navitem">Not logged in</span>
                 <a href="/home" id="logout" class="navbutton">Logout</a>
                 <a href="/login" id="login" class="navbutton">Login</a>
@@ -24,14 +24,35 @@
         <script src="/navcode.js"></script>
         <h1>Auction Ended &ndash; <span id="name"></span></h1>
         <p id="description">Description</p>
-        <p>Price: $<span id="price"></span></p>
-        <p>Shipping Price: $<span id="shipping"></span></p>
-        <input type="checkbox" id="expedited-shipping">
-        <label for="expedited-shipping">Enable Expedited Shipping</label>
-        <p>Expedited Shipping Price: +$<span id="expedited-price"></span></p>
-        <p>Total: $<span id="total"></span></p>
+        <table>
+            <tr>
+                <td>Price</td>
+                <td class="alignright">$</td>
+                <td id="price"></td>
+            </tr>
+            <tr>
+                <td>Shipping Price</td>
+                <td class="alignright">$</td>
+                <td id="shipping"></td>
+            </tr>
+            <tr>
+                <td>Expedited Shipping Price</td>
+                <td class="alignright">+$</td>
+                <td id="expedited-price"></td>
+            </tr>
+            <tr>
+                <td><label for="expedited-shipping">Enable Expedited Shipping</label></td>
+                <td></td>
+                <td><input type="checkbox" id="expedited-shipping"></td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td class="alignright">$</td>
+                <td id="total"></td>
+            </tr>
+        </table>
         <p id="notyounotice" class="hidden">Only the user who won an auction can buy the item.</p>
-        <input type="button" value="Pay Now" id="pay">
+        <input type="button" value="Pay Now" id="pay" class="mainbutton">
         <script>
          var cachedItem;
 

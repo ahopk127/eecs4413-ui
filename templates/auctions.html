@@ -10,7 +10,7 @@
         <nav>
             Silicon Auctions
 
-            <div class="navbuttons">
+            <div class="alignright">
                 <span id="username" class="navitem">Not logged in</span>
                 <a id="logout" class="navbutton">Logout</a>
                 <a href="/login" id="login" class="navbutton">Login</a>
@@ -22,10 +22,10 @@
             </div>
         </nav>
         <script src="/navcode.js"></script>
-        <h1>Auctions</h1>
-        <label for="search">Search Auctions:</label>
-        <input type="text" id="search"><br>
-        <table id="itemsTable">
+        <h1>Auctions List</h1>
+        <label for="search">Search Auctions</label>
+        <input type="text" id="search" placeholder="Search...">
+        <table id="itemsTable" class="fancytable">
             <thead>
                 <tr>
                     <td>Item Name</td>
@@ -39,8 +39,8 @@
             </tbody>
         </table>
         <p id="loginnotice" class="hidden">Please log in to participate in auctions.</p>
-        <input type="button" value="Bid on Selected Auction" id="bid">
-        <input type="button" value="Set Price of Selected Auction" id="set-price">
+        <input type="button" class="mainbutton" value="Bid on Selected Auction" id="bid">
+        <input type="button" class="mainbutton" value="Set Price of Selected Auction" id="set-price">
         <script>
          var cachedResult;
 

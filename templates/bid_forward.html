@@ -10,7 +10,7 @@
         <nav>
             Silicon Auctions
 
-            <div class="navbuttons">
+            <div class="alignright">
                 <span id="username" class="navitem">Not logged in</span>
                 <a href="/home" id="logout" class="navbutton">Logout</a>
                 <a href="/login" id="login" class="navbutton">Login</a>
@@ -24,13 +24,24 @@
         <script src="/navcode.js"></script>
         <h1>Forward Auction &ndash; <span id="name"></span></h1>
         <p id="description">Description</p>
-        <p>Current Price: $<span id="price"></span></p>
-        <p>Highest Bidder: <span id="bidder">No one has bidded on this auction yet.</span></p>
-        <p>Auction Runs until: <span id="end-time"></span></p>
         <form id="bid-form">
-            <label for="bid-amount">Amount to bid: $</label>
-            <input type="number" id="bid-amount"><br>
-            <input type="submit" value="Bid" id="bid">
+            <table>
+                <tr>
+                    <td>Current Price</td><td class="alignright">$</td><td id="price"></td>
+                </tr>
+                <tr>
+                    <td>Highest Bidder</td><td></td><td id="bidder">No one has bidded on this auction yet.</td>
+                </tr>
+                <tr>
+                    <td>Auction Runs until</td><td></td><td id="end-time"></td>
+                </tr>
+                <tr>
+                    <td><label for="bid-amount">Amount to bid</label></td>
+                    <td class="alignright">$</td>
+                    <td><input type="number" id="bid-amount"></td>
+                </tr>
+            </table>
+            <input type="submit" value="Bid" id="bid" class="mainbutton">
         </form>
         <script>
          var cachedItem;

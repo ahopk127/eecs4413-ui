@@ -2,7 +2,7 @@
     <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dutch Auction &ndash; Set Price</title>
+	<title>Dutch Auction &ndash; Reduce Price</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" href="/styles.css">
     </head>
@@ -10,7 +10,7 @@
         <nav>
             Silicon Auctions
 
-            <div class="navbuttons">
+            <div class="alignright">
                 <span id="username" class="navitem">Not logged in</span>
                 <a href="/home" id="logout" class="navbutton">Logout</a>
                 <a href="/login" id="login" class="navbutton">Login</a>
@@ -22,15 +22,20 @@
             </div>
         </nav>
         <script src="/navcode.js"></script>
-        <h1>Dutch Auction &ndash; <span id="name"></span> &ndash; Set Price</h1>
+        <h1>Dutch Auction &ndash; <span id="name"></span> &ndash; Reduce Price</h1>
         <p id="description">Description</p>
-        <p>Current Price: $<span id="price"></span></p>
         <p id="sold" class="hidden">This item has been sold.</p>
         <p id="noaccess" class="hidden">Only the owner can set the price.</p>
         <form id="set-price-form">
-            <label for="new-price">New Price: $</label>
-            <input type="number" id="new-price"><br>
-            <input type="submit" value="Set Price" id="set-price">
+            <table>
+                <tr><td>Current Price</td><td class="alignright">$</td><td id="price"></td></tr>
+                <tr>
+                    <td><label for="new-price">New Price</label></td>
+                    <td class="alignright">$</td>
+                    <td><input type="number" id="new-price"></td>
+                </tr>
+            </table>
+            <input type="submit" value="Set Price" id="set-price" class="mainbutton">
         </form>
         <script>
          var cachedItem;
