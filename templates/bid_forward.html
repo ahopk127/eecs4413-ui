@@ -7,6 +7,21 @@
         <link rel="stylesheet" href="/styles.css">
     </head>
     <body>
+        <nav>
+            Silicon Auctions
+
+            <div class="navbuttons">
+                <span id="username" class="navitem">Not logged in</span>
+                <a href="/home" id="logout" class="navbutton">Logout</a>
+                <a href="/login" id="login" class="navbutton">Login</a>
+                <a href="/register" id="sign-up" class="navbutton">Sign Up</a>
+                
+                <a href="/home" class="navitem">Home</a>
+                <a href="/auctions" class="navitem">Auctions</a>
+                <a href="/auctions/sell" id="new-auction" class="navitem">New Auction</a>
+            </div>
+        </nav>
+        <script src="/navcode.js"></script>
         <h1>Forward Auction &ndash; <span id="name"></span></h1>
         <p id="description">Description</p>
         <p>Current Price: $<span id="price"></span></p>

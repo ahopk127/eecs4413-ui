@@ -2,11 +2,6 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/hello/")
-@app.route("/hello/<name>")
-def hello_world(name=None):
-    return render_template('hello.html', person=name)
-
 @app.route("/register")
 def register():
     return render_template('register.html')
@@ -60,3 +55,7 @@ def set_price(auctionId: int):
 @app.route("/styles.css")
 def styles():
     return render_template('styles.css')
+
+@app.route("/navcode.js")
+def navcode():
+    return render_template('navcode.js')

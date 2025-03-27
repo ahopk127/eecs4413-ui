@@ -7,45 +7,21 @@
         <link rel="stylesheet" href="/styles.css">
     </head>
     <body>
+        <nav>
+            Silicon Auctions
+
+            <div class="navbuttons">
+                <span id="username" class="navitem">Not logged in</span>
+                <a id="logout" class="navbutton">Logout</a>
+                <a href="/login" id="login" class="navbutton">Login</a>
+                <a href="/register" id="sign-up" class="navbutton">Sign Up</a>
+                
+                <a href="/home" class="navitem">Home</a>
+                <a href="/auctions" class="navitem">Auctions</a>
+                <a href="/auctions/sell" id="new-auction" class="navitem">New Auction</a>
+            </div>
+        </nav>
+        <script src="/navcode.js"></script>
         <h1>Auction System &ndash; Team Silicon</h1>
-        <p id="loggedin">You are logged in as <span id="username">?</span>.</p>
-        <p id="loggedout">You are not logged in.</p>
-        <a href="/login" id="login">Login</a>
-        <a href="/register" id="sign-up">Sign Up</a>
-        <input type="button" value="Logout" id="logout"><br>
-        <a href="/auctions">Auctions</a>
-        <a href="/auctions/sell" id="new-auction">New Auction</a>
     </body>
-    <script>
-     function setLoggedIn(userId) {
-       $.ajax({
-         url: `http://localhost:8085/api/users/${userId}`,
-         type: 'GET',
-         success: function(result) {
-           const username = result.username;
-           $("#username").text(username);
-         },
-         error: function(error){
-           console.log(error);
-         }
-       });
-     }
-
-     const userId = localStorage.getItem("activeUserId");
-     if (userId) {
-       document.getElementById("loggedout").classList.add("hidden");
-       document.getElementById("login").classList.add("hidden");
-       document.getElementById("sign-up").classList.add("hidden");
-       setLoggedIn(userId);
-     } else {
-       document.getElementById("loggedin").classList.add("hidden");
-       document.getElementById("logout").classList.add("hidden");
-       document.getElementById("new-auction").classList.add("hidden");
-     }
-
-     document.getElementById("logout").addEventListener("click", (e) => {
-       localStorage.removeItem("activeUserId");
-       location.reload();
-     });
-    </script>
 </html>
