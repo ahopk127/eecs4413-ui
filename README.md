@@ -7,13 +7,13 @@ This frontend is made in [Flask](https://flask.palletsprojects.com/en/stable/), 
 Windows:
 ```
 .venv\Scripts\activate
-python -m flask --app hello run
+python -m flask run
 ```
 
 Unix:
 ```
 . .venv/bin/activate
-python -m flask --app hello run
+python -m flask run
 ```
 
 The site will be at http://localhost:5000
