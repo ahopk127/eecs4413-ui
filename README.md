@@ -20,7 +20,7 @@ pip install Flask
 Unix:
 ```
 python -m venv .venv
-.venv\Scripts\activate
+. .venv/bin/activate
 pip install Flask
 ```
 
