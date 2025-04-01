@@ -69,8 +69,8 @@
         </form>
         <script>
          function create(user) {
-           var date = new Date();
-           date = new Date(date.getTime() + 86400 * 5 + 86400 * 10 * Math.random());
+           var date = new Date($("#until").val());
+           date = new Date(date.getTime() + 86400000 * 5 + 86400000 * 10 * Math.random());
 
            var itemData = {
              name: $("#item-name").val(),
