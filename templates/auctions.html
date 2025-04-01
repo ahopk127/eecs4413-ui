@@ -67,7 +67,7 @@
              }
            });
 
-           if (!localStorage.getItem("activeUserId")) {
+           if (!localStorage.getItem("activeUserToken")) {
              document.getElementById("bid").disabled = true;
              document.getElementById("set-price").disabled = true;
              document.getElementById("loginnotice").classList.remove("hidden");
@@ -110,12 +110,13 @@
            const completion = new Date(item.duration);
            const now = new Date();
 
-           console.log(item);
-           if (now >= completion || localStorage.getItem("activeUserId") != item.owner.id || item.auctionType !== "DUTCH" || item.status !== "AVAILABLE") {
-             alert("You can't set this item's price.");
-           } else {
-             window.location.href = `/auctions/setprice/${selectedId}`;
-           }
+           onActiveUser((user) => {
+             if (now >= completion || user.id != item.owner.id || item.auctionType !== "DUTCH" || item.status !== "AVAILABLE") {
+               alert("You can't set this item's price.");
+             } else {
+               window.location.href = `/auctions/setprice/${selectedId}`;
+             }
+           });
          });
         </script>
     </body>

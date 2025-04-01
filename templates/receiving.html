@@ -60,8 +60,6 @@
                  $("#bidder").text(result.highestBidder.username);
                }
 
-               console.log(result);
-               console.log(result.arrival);
                if (result.arrival) {
                  const arrival = new Date(result.arrival);
                  const now = new Date();

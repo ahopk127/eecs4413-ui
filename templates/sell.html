@@ -103,8 +103,10 @@
          $("#sellForm").submit(function(e) {
            e.preventDefault();
            $.ajax({
-             url: `http://localhost:8085/api/users/${localStorage.getItem("activeUserId")}`,
-             type: 'GET',
+             url: `http://localhost:8085/api/users/userfromtoken`,
+             type: 'POST',
+             contentType: 'application/json',
+             data: localStorage.getItem("activeUserToken"),
              success: function(result) {
                create(result);
              },

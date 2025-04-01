@@ -1,10 +1,11 @@
-function setLoggedIn(userId) {
+function onActiveUser(callback) {
   $.ajax({
-    url: `http://localhost:8085/api/users/${userId}`,
-    type: 'GET',
+    url: `http://localhost:8085/api/users/userfromtoken`,
+    type: 'POST',
+    contentType: 'application/json',
+    data: localStorage.getItem("activeUserToken"),
     success: function(result) {
-      const username = result.username;
-      $("#username").text(username);
+      callback(result);
     },
     error: function(error){
       console.log(error);
@@ -12,17 +13,18 @@ function setLoggedIn(userId) {
   });
 }
 
-const userId = localStorage.getItem("activeUserId");
-if (userId) {
+if (localStorage.getItem("activeUserToken")) {
   document.getElementById("login").classList.add("hidden");
   document.getElementById("sign-up").classList.add("hidden");
-  setLoggedIn(userId);
+  onActiveUser((user) => {
+    document.getElementById("username").innerText = user.username;
+  });
 } else {
   document.getElementById("logout").classList.add("hidden");
   document.getElementById("new-auction").classList.add("hidden");
 }
 
 document.getElementById("logout").addEventListener("click", (e) => {
-  localStorage.removeItem("activeUserId");
+  localStorage.removeItem("activeUserToken");
   location.reload();
 });

@@ -50,20 +50,22 @@
          });
 
          $("#bid-btn").on("click", function(e) {
-	   e.preventDefault();
-           const bidData = {
-             itemId: cachedItem.id,
-             userId: localStorage.getItem("activeUserId"),
-             bidAmount: cachedItem.currentPrice
-           };
-           console.log(JSON.stringify(bidData));
-           $.ajax({
-             url: "http://localhost:8085/api/main/bid",
-             type: 'POST',
-             contentType: 'application/json',
-             data: JSON.stringify(bidData),
-             success: function(result) { location.href="/auctions/done/{{ auctionId }}"; },
-             error: function(error) { console.log(error); }
+           onActiveUser((user) => {
+             e.preventDefault();
+             const bidData = {
+               itemId: cachedItem.id,
+               userId: user.id,
+               bidAmount: cachedItem.currentPrice
+             };
+             console.log(JSON.stringify(bidData));
+             $.ajax({
+               url: "http://localhost:8085/api/main/bid",
+               type: 'POST',
+               contentType: 'application/json',
+               data: JSON.stringify(bidData),
+               success: function(result) { location.href="/auctions/done/{{ auctionId }}"; },
+               error: function(error) { console.log(error); }
+             });
            });
          });
         </script>

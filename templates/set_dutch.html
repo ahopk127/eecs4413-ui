@@ -54,12 +54,13 @@
                  $("#set-price").attr("disabled", true);
                }
 
-               console.log(result.owner.id);
-               if (localStorage.getItem("activeUserId") != result.owner.id) {
-                 $("#noaccess").removeClass("hidden");
-                 $("#new-price").attr("disabled", true);
-                 $("#set-price").attr("disabled", true);
-               }
+               onActiveUser((user) => {
+                 if (user.id != result.owner.id) {
+                   $("#noaccess").removeClass("hidden");
+                   $("#new-price").attr("disabled", true);
+                   $("#set-price").attr("disabled", true);
+                 }
+               });
              },
              error: function(error){
                console.log(error);

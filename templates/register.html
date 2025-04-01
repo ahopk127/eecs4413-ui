@@ -65,6 +65,29 @@
             <input type="submit" value="Register" class="mainbutton">
         </form>
         <script>
+         function login(username, password) {
+           var accountData = { username: username, password: password };
+           console.log(JSON.stringify(accountData));
+           $.ajax({
+             url: "http://localhost:8085/api/users/login",
+             type: 'POST',
+             contentType: 'application/json',
+             data: JSON.stringify(accountData),
+             success: function(result) {
+               localStorage.setItem("activeUserToken", result);
+               window.location.href = "/home";
+             },
+             error: function(error) {
+               if (error.status === 401) {
+                 alert("Login failed.");
+               } else {
+                 console.log("An error occurred.");
+                 console.log(error);
+               }
+             }
+           });
+         }
+
          $("#registerForm").submit(function(e) {
            e.preventDefault();
            var accountData = {
@@ -83,33 +106,11 @@
              type: 'POST',
              contentType: 'application/json',
              data: JSON.stringify(accountData),
-             success: function(result) {},
+             success: function(result) {
+               login($("#username-input").val(), $("#password-input").val());
+             },
 	     error: function(error){
                console.log(error);
-             }
-           });
-
-           // login to the account, since the backend doesn't return the user id
-           var accountData = {
-             username: $("#username-input").val(),
-             password: $("#password-input").val(),
-           };
-           $.ajax({
-             url: "http://localhost:8085/api/users/login",
-             type: 'POST',
-             contentType: 'application/json',
-             data: JSON.stringify(accountData),
-             success: function(result) {
-               localStorage.setItem("activeUserId", result.id);
-               window.location.href = "/home";
-             },
-	     error: function(error) {
-               if (error.status === 401) {
-                 alert("Login failed.");
-               } else {
-                 console.log("An error occurred.");
-                 console.log(error);
-               }
              }
            });
          });

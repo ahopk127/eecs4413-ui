@@ -88,19 +88,21 @@
              url: "http://localhost:8085/api/items/{{ auctionId }}",
              type: 'GET',
              success: function(result) {
-               cachedItem = result;
+               onActiveUser((user) => {
+                 cachedItem = result;
 
-               $("#name").text(result.name);
-               $("#description").text(result.description);
-               if (result.highestBidder) {
-                 $("#bidder").text(result.highestBidder.username);
-                 if (result.highestBidder.id != localStorage.getItem("activeUserId")) {
-                   document.getElementById("pay").disabled = true;
-                   document.getElementById("notyounotice").classList.remove("hidden");
+                 $("#name").text(result.name);
+                 $("#description").text(result.description);
+                 if (result.highestBidder) {
+                   $("#bidder").text(result.highestBidder.username);
+                   if (result.highestBidder.id != user.id) {
+                     document.getElementById("pay").disabled = true;
+                     document.getElementById("notyounotice").classList.remove("hidden");
+                   }
                  }
-               }
 
-               updatePrice();
+                 updatePrice();
+               });
              },
              error: function(error){
                console.log(error);

@@ -66,19 +66,21 @@
          });
 
          function updateBid(item, amount) {
-           const bidData = {
-             itemId: item.id,
-             userId: localStorage.getItem("activeUserId"),
-             bidAmount: amount
-           };
-           console.log(JSON.stringify(bidData));
-           $.ajax({
-             url: "http://localhost:8085/api/main/bid",
-             type: 'POST',
-             contentType: 'application/json',
-             data: JSON.stringify(bidData),
-             success: function(result) { location.reload(); },
-             error: function(error) { console.log(error); }
+           onActiveUser((user) => {
+             const bidData = {
+               itemId: item.id,
+               userId: user.id,
+               bidAmount: amount
+             };
+             console.log(JSON.stringify(bidData));
+             $.ajax({
+               url: "http://localhost:8085/api/main/bid",
+               type: 'POST',
+               contentType: 'application/json',
+               data: JSON.stringify(bidData),
+               success: function(result) { location.reload(); },
+               error: function(error) { console.log(error); }
+             });
            });
          }
 
