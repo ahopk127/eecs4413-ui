@@ -4,6 +4,26 @@ This frontend is made in [Flask](https://flask.palletsprojects.com/en/stable/), 
 
 This application works with the backend at [ahopk127/eecs4413-api](https://github.com/ahopk127/eecs4413-api/).
 
+## Set up the Virtual Environment
+
+You only need to do this once.
+
+Run this commands in a terminal inside the same directory as this code.
+
+Windows:
+```
+python -m venv .venv
+.venv\Scripts\activate
+pip install Flask
+```
+
+Unix:
+```
+python -m venv .venv
+.venv\Scripts\activate
+pip install Flask
+```
+
 ## Executing
 
 Windows:
