@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 
 app = Flask(__name__)
 
@@ -53,9 +53,9 @@ def set_price(auctionId: int):
     return render_template('set_dutch.html', auctionId=auctionId)
 
 @app.route("/styles.css")
-def styles():
-    return render_template('styles.css')
+def styles() -> Response:
+    return Response(render_template('styles.css'), mimetype='text/css')
 
 @app.route("/navcode.js")
-def navcode():
-    return render_template('navcode.js')
+def navcode() -> Response:
+    return Response(render_template('navcode.js'), mimetype='text/javascript')
