@@ -82,7 +82,7 @@
              status: "AVAILABLE",
              auctionType: $('input[name="auction-type"]:checked').val(),
              arrival: date.toISOString(),
-             duration: new Date($("#until").val()).toISOString(),
+             duration: new Date(new Date($("#until").val()).getTime() + 86399999).toISOString(),
              owner: user
            };
 
